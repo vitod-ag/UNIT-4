@@ -10,12 +10,14 @@ public class esercizio3 {
         float base = scanner.nextFloat();
         System.out.println("Digita l'altezza del rettangolo: ");
         float altezza = scanner.nextFloat();
+        //
         System.out.println("Il perimetro del rettangolo in questione è: " + perimetroRettangolo(base, altezza));
         System.out.println("**esercizio#3pt2**\n");
         System.out.println("Digita un intero e scopriamo se è pari(0) o dispari(1):");
         int numero = scanner.nextInt();
         System.out.println("Il numero " + numero + " è : " + pariDispari(numero));
         System.out.println("**esercizio#3pt3**\n");
+        //
         System.out.println("Digita il cateto 1 del triangolo: ");
         double cateto1 = scanner.nextDouble();
         System.out.println("Digita il cateto 2 del triangolo: ");
