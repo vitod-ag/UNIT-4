@@ -8,21 +8,21 @@ public class While {
         System.out.println("Inserire una stringa");
         String string = scanner.nextLine();
 
-        String newString = suddivide(string);
-        System.out.println("La nuova stringa suddivisa con virgole: " + newString);
-    }
-
-    public static String suddivide(String stringa) {
-        int i=0;
-        StringBuilder result = new StringBuilder();
-
-        while (i<stringa.length()){
-            result.append(stringa.charAt(i));
-            if (i!=stringa.length()-1) {
-                result.append(",");
+        while (!string.equals(":q")) {
+            for (int i=0; i<string.length(); i++) {
+                System.out.print(string.charAt(i));
+                if (i!=string.length()-1){
+                    System.out.print(",");
+                }
             }
-            i++;
+            System.out.println();
+
+            System.out.println("Inserire una stringa");
+            string = scanner.nextLine();
+
         }
-        return result.toString();
     }
 }
+
+
+

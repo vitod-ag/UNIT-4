@@ -9,12 +9,21 @@ public class If_elseIf {
         System.out.println("Inserisci una stringa: ");
         String stringa = scanner.nextLine();
         boolean verify = stringaPariDispari(stringa);
-        System.out.println("La stringa " + stringa + " è pari(true) oppure no(false)? " + verify);
+        if (verify) {
+            System.out.println("Stringa di lunghezza pari");
+        }else {
+            System.out.println("Stringa di lunghezza dispari");
+        }
+
 
         System.out.println("Digita l'anno e vediamo se è bisestile:");
         int anno = scanner.nextInt();
         boolean annoBisestile = annoBisestile(anno);
-        System.out.println("L'anno " + anno + " è bisestile? " + annoBisestile);
+        if (annoBisestile) {
+            System.out.println("Anno bisestile");
+        }else {
+            System.out.println("Anno non bisestile");
+        }
 
     }
 
@@ -27,12 +36,8 @@ public class If_elseIf {
     }
 
     public static boolean annoBisestile(int anno) {
-        if(anno%4==0){
+        if (anno % 400 == 0 || ((anno % 4 == 0) && (anno % 100 != 0))) {
             return true;
-        }else if(anno%100==0) {
-            if(anno%400 == 0) {
-                return true;
-            }
         }
         return false;
     }
