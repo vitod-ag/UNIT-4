@@ -5,22 +5,18 @@ import java.util.Scanner;
 public class While {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Inserire una stringa");
+
+        System.out.println("Digita una stringa:");
         String string = scanner.nextLine();
 
-        while (!string.equals(":q")) {
-            for (int i=0; i<string.length(); i++) {
-                System.out.print(string.charAt(i));
-                if (i!=string.length()-1){
-                    System.out.print(",");
-                }
-            }
-            System.out.println();
+        System.out.println("La stringa in questione è " + stringaPariDispari(string));
+    }
 
-            System.out.println("Inserire una stringa");
-            string = scanner.nextLine();
-
+    public static boolean stringaPariDispari(String s) {
+        if (s.length()%2==0){
+            return true;
         }
+        return false;
     }
 }
 
