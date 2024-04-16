@@ -6,19 +6,35 @@ public class While {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Digita una stringa:");
-        String string = scanner.nextLine();
+        System.out.println("Dammi una parola");
+        String parola = scanner.nextLine();
 
-        System.out.println("La stringa in questione è " + stringaPariDispari(string));
-    }
+        while (!parola.equals(":q")) {
 
-    public static boolean stringaPariDispari(String s) {
-        if (s.length()%2==0){
-            return true;
+            for (int i = 0; i < parola.length(); i++) {
+                System.out.print(parola.charAt(i));
+                if (i != parola.length() - 1)
+                    System.out.print(",");
+            }
+            System.out.println();
+
+            String newParola = "";
+
+
+            System.out.println(newParola);
+
+
+            System.out.println("Dammi una parola");
+            parola = scanner.nextLine();
         }
-        return false;
+
     }
 }
 
-
-
+//            for (int i=0; i<parola.length(); i++){
+//                newParola = newParola + parola.charAt(i);
+//
+//                if(i!=parola.length()-1){
+//                    newParola = newParola + ",";
+//                }
+//            }
