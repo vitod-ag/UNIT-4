@@ -1,4 +1,4 @@
-public class Cane extends Animale{
+public class Cane extends Animale implements MezzoDiTrasporto{
     private String breed;
 
     public Cane(String nome, int zampe, String breed) {
@@ -20,5 +20,17 @@ public class Cane extends Animale{
     @Override
     public String visualizzaDati() {
         return super.visualizzaDati()+", razza :" + breed;
+    }
+
+    // ---implemento abstract del metodo verso di Animale
+
+    @Override
+    public void verso() {
+        System.out.println("bau bau");
+    }
+
+    @Override
+    public void tipoTrasporto() {
+        System.out.println("Traina una slitta");
     }
 }

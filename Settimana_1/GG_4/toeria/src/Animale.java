@@ -1,4 +1,4 @@
-public class Animale {
+public abstract class Animale {
     private int zampe;
     private String nome;
 
@@ -42,4 +42,10 @@ public class Animale {
     public String visualizzaDati() {
         return "Nome: " + nome + ", zampe: " + zampe;
     }
+
+    // astrazione (ha bisogno che anche la classe stessa sia astratta
+
+    public abstract void verso();
+
+
 }
