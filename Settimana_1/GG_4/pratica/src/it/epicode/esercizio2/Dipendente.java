@@ -3,17 +3,16 @@ package it.epicode.esercizio2;
 //rendo questa classe abstract ovvero che non può essere istanziata direttamente,
 // ma serve come modello per le sue sottoclassi.
 public abstract class Dipendente {
-    private String matricola;
+    private int matricola;
     private double stipendio;
     private Dipartimento dipartimento;
 
-    public Dipendente (String matricola, double stipendio, Dipartimento dipartimento) {
+    public Dipendente (int matricola, Dipartimento dipartimento) {
         this.matricola= matricola;
-        this.stipendio=stipendio;
         this.dipartimento=dipartimento;
     }
 
-    public String getMatricola() {
+    public int getMatricola() {
         return this.matricola;
     }
 
@@ -29,7 +28,12 @@ public abstract class Dipendente {
         this.dipartimento=dipartimento;
     }
 
-    // Metodo astratto per calcolare lo stipendio
-    public abstract double calcolaStipendio();
+    // setto lo stipendio poiché i dipendenti non hanno lo stesso stipendio
+    public void setStipendio(double stipendio){
+        this.stipendio=stipendio;
+    }
+
+    // Metodo astratto per calcolare lo stipendio aggiungendoci la variabile giorni in base se è Full o Part Time
+    public abstract void calcolaStipendio(int giorni);
 
 }

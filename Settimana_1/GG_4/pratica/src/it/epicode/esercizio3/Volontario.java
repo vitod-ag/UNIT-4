@@ -11,8 +11,32 @@ public class Volontario implements DipendenteI {
         this.CV = CV;
     }
 
+    public String getNome() {
+        return this.nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getEta() {
+        return this.eta;
+    }
+
+    public void setEta(int eta) {
+        this.eta = eta;
+    }
+
+    public String getCV() {
+        return this.CV;
+    }
+
+    public void setCV(String CV) {
+        this.CV = CV;
+    }
+
     @Override
     public void checkIn() {
-        System.out.println("Il volontario " + this.nome + " è entrato in servizio");
+        System.out.println("Inizio attivita ore 12");
     }
 }

@@ -1,12 +1,18 @@
 package it.epicode.esercizio3;
 
 public class Dirigente extends Dipendente{
-    public Dirigente(String matricola, double stipendio, Dipartimento dipartimento) {
-        super(matricola, stipendio, dipartimento);
+
+    public Dirigente(int matricola, Dipartimento dipartimento) {
+        super(matricola, dipartimento);
     }
 
     @Override
-    public double calcolaStipendio() {
-        return this.getStipendio();
+    public void calcolaStipendio(int giorni) {
+        setStipendio(2200);
+    }
+
+    @Override
+    public void checkIn() {
+        System.out.println("Inizio attività ore 10:30");
     }
 }

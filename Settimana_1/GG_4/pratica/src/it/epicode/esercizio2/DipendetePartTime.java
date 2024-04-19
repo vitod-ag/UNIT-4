@@ -1,16 +1,14 @@
 package it.epicode.esercizio2;
 
 public class DipendetePartTime extends Dipendente{
-    private int oreLavorate;
 
-    public DipendetePartTime(String matricola, double stipendio, Dipartimento dipartimento, int oreLavorate) {
-        super(matricola, stipendio, dipartimento);
-        this.oreLavorate = oreLavorate;
+    public DipendetePartTime(int matricola, Dipartimento dipartimento) {
+        super(matricola, dipartimento);
     }
 
     @Override
-    public double calcolaStipendio() {
-        return this.getStipendio() * oreLavorate;
+    public void calcolaStipendio(int giorni) {
+        setStipendio(giorni*60);
     }
 }
 

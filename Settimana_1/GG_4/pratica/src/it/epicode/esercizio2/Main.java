@@ -1,15 +1,20 @@
 package it.epicode.esercizio2;
 
+
+
 public class Main {
     public static void main(String[] args) {
-        Dipendente dipendente1 = new DipendenteFullTime("IT011",2200, Dipartimento.AMMINISTRAZIONE);
-        Dipendente dipendente2 = new DipendetePartTime("IT007",1800, Dipartimento.PRODUZIONE, 20);
-        Dipendente dipendente3 = new Dirigente("IT004", 1700, Dipartimento.VENDITE);
+        Dipendente[] dipendenti = new Dipendente[3];
 
-        Dipendente[] dipendenti = {dipendente1,dipendente2,dipendente3};
+        dipendenti[0] = new DipendenteFullTime(1487, Dipartimento.AMMINISTRAZIONE);
+        dipendenti[1] = new DipendetePartTime(1658, Dipartimento.PRODUZIONE);
+        dipendenti[2] = new Dirigente(75856,  Dipartimento.VENDITE);
 
-        for(Dipendente dipendente: dipendenti) {
-            System.out.println("Dipendente: " + dipendente.calcolaStipendio() + "€");
+
+
+        for(int i=0; i<dipendenti.length; i++) {
+            dipendenti[i].calcolaStipendio(9);
+            System.out.println("Dipendente: " + dipendenti[i].getStipendio());
         }
     }
 }

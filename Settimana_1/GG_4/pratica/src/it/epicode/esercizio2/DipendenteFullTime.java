@@ -2,13 +2,13 @@ package it.epicode.esercizio2;
 
 public class DipendenteFullTime extends Dipendente{
 
-    public DipendenteFullTime(String matricola, double stipendio, Dipartimento dipartimento) {
-        super(matricola, stipendio, dipartimento);
+    public DipendenteFullTime(int matricola, Dipartimento dipartimento) {
+        super(matricola, dipartimento);
     }
 
     @Override
-    public double calcolaStipendio() {
-        return this.getStipendio();
+    public void calcolaStipendio(int giorni) {
+        setStipendio(1700);
     }
 }
 

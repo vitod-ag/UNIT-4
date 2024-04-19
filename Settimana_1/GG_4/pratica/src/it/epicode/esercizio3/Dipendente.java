@@ -1,23 +1,28 @@
 package it.epicode.esercizio3;
 
 public abstract class Dipendente implements DipendenteI {
-    private String matricola;
+    private int matricola;
     private double stipendio;
     private Dipartimento dipartimento;
 
-    public Dipendente(String matricola, double stipendio, Dipartimento dipartimento) {
+    public Dipendente(int matricola, Dipartimento dipartimento) {
         this.matricola = matricola;
-        this.stipendio = stipendio;
         this.dipartimento = dipartimento;
     }
 
-    public String getMatricola() {
+    public int getMatricola() {
         return this.matricola;
     }
 
     public double getStipendio() {
         return this.stipendio;
     }
+
+    // setto lo stipendio poiché i dipendenti non hanno lo stesso stipendio
+    public void setStipendio(double stipendio){
+        this.stipendio=stipendio;
+    }
+
 
     public Dipartimento getDipartimento() {
         return this.dipartimento;
@@ -27,10 +32,6 @@ public abstract class Dipendente implements DipendenteI {
         this.dipartimento = dipartimento;
     }
 
-    public abstract double calcolaStipendio();
+    public abstract void calcolaStipendio(int giorni);
 
-    @Override
-    public void checkIn() {
-        System.out.println(this.matricola + " è entrato in servizio");
-    }
 }
