@@ -1,6 +1,6 @@
 package it.epicode;
 
-public class Video extends ElementoMultimediale implements AudioVideo,VideoImmagine{
+public class Video extends ElementoMultimediale {
     private int luminosita;
     public Video(String title, int duration, int volume, int luminosita) {
         super(title, duration, volume);
@@ -31,14 +31,12 @@ public class Video extends ElementoMultimediale implements AudioVideo,VideoImmag
         }
     }
 
-    @Override
     public void alzaVolume() {
         if(this.getVolume() < 10) {
             this.setVolume(this.getVolume() + 1); ;
         }
     }
 
-    @Override
     public void abbassaVolume() {
         if(this.getVolume() < 0) {
             this.setVolume(this.getVolume() - 1);

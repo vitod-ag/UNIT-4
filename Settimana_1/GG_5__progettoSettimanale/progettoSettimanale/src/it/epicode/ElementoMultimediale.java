@@ -40,4 +40,12 @@ public abstract class ElementoMultimediale {
     }
 
 
+    public void play() {
+
+    }
+    public void show() {
+
+    }
+
+
 }

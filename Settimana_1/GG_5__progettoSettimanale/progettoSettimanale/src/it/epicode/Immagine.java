@@ -1,6 +1,6 @@
 package it.epicode;
 
-public class Immagine extends ElementoMultimediale implements VideoImmagine{
+public class Immagine extends ElementoMultimediale {
     private int luminosita;
 
     public Immagine(String title, int luminosita) {
@@ -13,15 +13,12 @@ public class Immagine extends ElementoMultimediale implements VideoImmagine{
         System.out.println(this.getTitle() + " " + "*".repeat(Math.max(0,this.luminosita)));
     }
 
-
-    @Override
     public void alzaLuminosita() {
         if(this.luminosita < 10) {
             this.luminosita += 1; ;
         }
     }
 
-    @Override
     public void abbassaLuminosita() {
         if(this.luminosita < 0) {
             this.luminosita -= 1;
