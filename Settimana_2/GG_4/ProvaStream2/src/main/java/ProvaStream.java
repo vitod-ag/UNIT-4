@@ -69,7 +69,7 @@ public class ProvaStream {
         System.out.println(somma);
 
         // calcoliamo la media
-        System.out.println("\n*PARTE_6* --> Stream con il solo double con l'addizione");
+        System.out.println("\n*PARTE_6* --> Stream con il solo double con la media");
         double media = prodotti.stream().map(Prodotto::getPrezzo).collect(Collectors.averagingDouble(Double::doubleValue));
         System.out.println(media);
 
