@@ -1,23 +1,21 @@
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Objects;
 
 public class Catalogo {
-    private HashSet<String> codiceISBN;
+    private String codiceISBN;
     private String titolo;
     private LocalDate annoPubblicazione;
     private Integer numeroPagine;
 
 
     public Catalogo(String codiceISBN,String titolo, LocalDate annoPubblicazione, Integer numeroPagine) {
-        this.codiceISBN = new HashSet<>();
-        this.codiceISBN.add(codiceISBN);
+        this.codiceISBN = codiceISBN;
         this.titolo = titolo;
         this.annoPubblicazione = annoPubblicazione;
         this.numeroPagine = numeroPagine;
     }
 
-    public HashSet<String> getCodiceISBN() {
+    public String getCodiceISBN() {
         return codiceISBN;
     }
 

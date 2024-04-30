@@ -1,5 +1,4 @@
 import java.time.LocalDate;
-import java.util.HashSet;
 
 public class Libro extends Catalogo{
     private String autore;
