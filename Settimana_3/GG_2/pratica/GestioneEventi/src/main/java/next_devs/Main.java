@@ -33,12 +33,14 @@ public class Main {
         //eventoDao.save(evento2);
 
         Evento evento3 = eventoDao.getById(1);
+        Evento evento4 = eventoDao.getById(2);
 
-        evento1.setDescrizione("Degustazione vini");
-        //eventoDao.save(evento1);
-
-        eventoDao.delete(evento3);
-        eventoDao.delete(evento1);
+//        evento1.setDescrizione("Degustazione vini");
+//        evento4.setDescrizione("Pranzo a sacco");
+//        //eventoDao.save(evento4);
+//
+//        eventoDao.delete(evento3);
+//        eventoDao.delete(evento4);
 
 
     }

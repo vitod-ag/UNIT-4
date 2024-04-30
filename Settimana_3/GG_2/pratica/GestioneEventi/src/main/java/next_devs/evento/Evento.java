@@ -1,6 +1,8 @@
 package next_devs.evento;
 
 
+import org.hibernate.annotations.Check;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -9,6 +11,20 @@ import java.time.LocalDate;
 public class Evento {
     @Id
     @GeneratedValue
+//    METODI per l'auto-incremento dell'ID:
+
+//    1.@GeneratedValue
+//    2.@GeneratedValue(strategy = GenerationType.IDENTITY)
+//
+//    3.@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "eventi_id_sequence")
+//     @SequenceGenerator(name = "eventi_id_sequence", initialValue = 1, allocationSize = 1)
+//
+//    occhio che qui si inizia da 0!
+//    4.@GeneratedValue(strategy = GenerationType.TABLE, generator = "eventi_id_table")
+//     @TableGenerator(name = "eventi_id_table", initialValue = 0, allocationSize = 1)
+
+
+
     private Integer id;
 
     @Column(nullable = false,length = 30)
