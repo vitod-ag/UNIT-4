@@ -1,0 +1,63 @@
+Introduzione
+
+L'annotazione `@GeneratedValue` in JPA è utilizzata per specificare la strategia di generazione automatica dei valori delle chiavi primarie nelle entità. Questa annotazione è importante per garantire l'unicità e l'integrità dei dati nelle applicazioni che utilizzano database relazionali.
+
+Uso di `@GeneratedValue`
+
+Questa annotazione viene utilizzata in combinazione con `@Id` per indicare che il valore del campo o della proprietà sarà generato automaticamente. Ecco un esempio base:
+
+java
+@Entity
+public class EsempioEntità {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    // altri campi e metodi
+}
+
+
+Strategie di Generazione
+
+1. AUTO (Default)
+- Descrizione: La strategia `AUTO` lascia al provider di persistenza JPA il compito di scegliere la strategia di generazione più appropriata per un determinato database.
+- Uso Tipico: Quando si desidera che l'applicazione sia portabile tra diversi database senza preoccuparsi delle specifiche di generazione delle chiavi.
+
+2. IDENTITY
+- Descrizione: Utilizza le funzionalità di auto-incremento del database, come `AUTO_INCREMENT` in MySQL o `IDENTITY` in SQL Server.
+- Uso Tipico: Quando si lavora con un database che supporta l'auto-incremento. Questa strategia è efficace ma può ridurre la portabilità tra diversi database.
+
+3. SEQUENCE
+- Descrizione: Utilizza una sequenza di database, definita separatamente, per generare valori univoci.
+- Uso Tipico: Con database che supportano sequenze (come Oracle o PostgreSQL). È necessario definire una sequenza nel database o utilizzarne una esistente.
+
+java
+@Entity
+public class EsempioSequenza {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "nome_sequenza")
+    @SequenceGenerator(name = "nome_sequenza", sequenceName = "seq_nome", allocationSize = 1)
+    private Long id;
+}
+
+
+4. TABLE
+- Descrizione: Utilizza una tabella specifica del database per simulare una sequenza. Questo metodo conserva le chiavi generate in una tabella dedicata.
+- Uso Tipico: Quando si lavora con database che non supportano sequenze. Meno efficiente in termini di prestazioni rispetto alle altre strategie.
+
+java
+@Entity
+public class EsempioTabella {
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "nome_generatore")
+    @TableGenerator(name = "nome_generatore", table = "id_generator", pkColumnName = "gen_name", valueColumnName = "gen_val", allocationSize = 1)
+    private Long id;
+}
+
+
+Considerazioni Finali
+
+La scelta della strategia di generazione dipende da vari fattori, tra cui i requisiti dell'applicazione, il tipo di database utilizzato e le considerazioni relative alle prestazioni. È importante scegliere la strategia che meglio si adatta alle esigenze specifiche del progetto.
+
+---
+
+Questo documento fornisce una panoramica di base sull'annotazione `@GeneratedValue` e sulle sue strategie. Puoi personalizzarlo ulteriormente in base alle esigenze del tuo pubblico o contesto didattico.

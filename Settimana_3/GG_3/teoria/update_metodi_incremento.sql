@@ -1,0 +1,1 @@
+SELECT * FROM public.eventi_id_table; 

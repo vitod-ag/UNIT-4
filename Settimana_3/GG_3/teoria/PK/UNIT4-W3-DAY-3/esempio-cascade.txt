@@ -1,0 +1,28 @@
+Se vogliamo assicurarci che quando un `User` viene cancellato, anche il suo `Document` associato e i suoi `BlogPosts` vengano cancellati, dovresti usare `CascadeType.REMOVE` o `CascadeType.ALL` (che include `REMOVE`). Se vuoi salvare o aggiornare automaticamente il `Document` e i `BlogPosts` ogni volta che salvi o aggiorni il `User`, dovresti usare `CascadeType.PERSIST` o `CascadeType.MERGE`, rispettivamente.
+
+Ecco come puoi modificare la tua classe `User` per includere le operazioni in cascata:
+
+java
+package riccardogulin.entities;
+
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
+@Table(name = "users")
+public class User {
+    // ... altri campi e metodi ...
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Document document;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<BlogPost> blogPostList;
+
+    // ... costruttori, getter, setter e altri metodi ...
+}
+```
+
+In questo esempio, ho usato `CascadeType.ALL`, che significa che tutte le operazioni di cascata (`PERSIST`, `MERGE`, `REMOVE`, ecc.) sono applicate. Questo è un approccio ampio e potrebbe non essere adatto a tutti i casi d'uso. Dovresti scegliere i tipi di cascata in base alle specifiche esigenze della tua applicazione. Ad esempio, se vuoi solo propagare le operazioni di persistenza e unione, potresti sostituire `CascadeType.ALL` con `{CascadeType.PERSIST, CascadeType.MERGE}`.
+
+Ricorda, le operazioni in cascata possono avere implicazioni significative sull'integrità del tuo database e sulla logica della tua applicazione, quindi dovrebbero essere usate con giudizio.

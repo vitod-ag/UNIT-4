@@ -1,0 +1,70 @@
+Relazioni One-to-Many in Hibernate
+
+Introduzione
+
+In Hibernate, una relazione One-to-Many rappresenta un tipo comune di associazione tra entità, dove un'entità (lato "One") è correlata a molteplici istanze di un'altra entità (lato "Many"). Questa relazione è fondamentale per modellare situazioni in cui un'entità possiede o gestisce una collezione di altre entità.
+
+Concetti Fondamentali
+
+- Lato "One": Rappresenta l'entità che contiene molteplici istanze dell'altra entità.
+- Lato "Many": Rappresenta l'entità che ha una relazione con una singola istanza dell'entità lato "One".
+
+Annotazioni Hibernate
+
+- `@ManyToOne`: Utilizzata sul lato "Many" per mappare il campo che rappresenta la chiave esterna verso l'entità lato "One".
+- `@OneToMany`: Utilizzata sul lato "One" per mappare la collezione delle entità collegate.
+
+Esempio Pratico
+
+Scenario
+Un `Docente` può tenere più `Corsi`. Ogni `Corso` è insegnato da un solo `Docente`.
+
+Codice Java
+Entità Docente (Lato "One")
+java
+@Entity
+public class Docente {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String nome;
+
+    @OneToMany(mappedBy = "docente")
+    private Set<Corso> corsi;
+
+    // Getter, setter, costruttori
+}
+
+Entità Corso (Lato "Many")
+java
+@Entity
+public class Corso {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String titolo;
+
+    @ManyToOne
+    @JoinColumn(name = "docente_id")
+    private Docente docente;
+
+    // Getter, setter, costruttori
+}
+
+
+Casi di Utilizzo
+
+- Gestione di Collezioni: Quando un'entità deve gestire un gruppo di entità correlate.
+- Rapporti Gerarchici: In scenari dove esiste una chiara relazione gerarchica (es. un capo e i suoi dipendenti).
+
+Considerazioni Aggiuntive
+
+- Lazy vs Eager Loading: Hibernate permette di configurare se le entità collegate devono essere caricate pigramente (lazy loading) o immediatamente (eager loading).
+- Gestione delle Chiavi Esterne: Hibernate gestisce automaticamente le chiavi esterne e, se necessario, le tabelle di join.
+- Cascading: Le operazioni di cascata possono essere configurate per automatizzare la propagazione delle operazioni CRUD (Create, Read, Update, Delete) attraverso le entità correlate.
+
+Conclusioni
+
+Le relazioni One-to-Many sono cruciali nella modellazione di database relazionali e nella mappatura ORM (Object-Relational Mapping). Comprendere e utilizzare correttamente queste relazioni in Hibernate è fondamentale per sviluppare applicazioni robuste e ben strutturate. Questo documento fornisce le basi teoriche e pratiche per implementare relazioni One-to-Many in Hibernate con esempi codificati.

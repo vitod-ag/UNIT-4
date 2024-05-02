@@ -1,0 +1,120 @@
+Documento di Approfondimento sulle Relazioni One-to-One in JPA
+
+Introduzione
+
+In JPA (Java Persistence API), le relazioni One-to-One descrivono una relazione tra due entità dove ogni istanza di un'entità è associata a non più di un'istanza dell'altra entità. Esistono due tipi principali di relazioni One-to-One:
+
+1. Component o Embedded: Due oggetti risiedono su una sola tabella.
+2. Classiche: Due tabelle corrispondono a due oggetti distinti.
+
+1. Relazioni One-to-One Embedded (Component)
+
+Descrizione
+In questo tipo di relazione, un'entità è completamente contenuta all'interno di un'altra. Questo è tipicamente rappresentato in una singola tabella nel database. 
+
+Esempio Pratico
+Consideriamo un'entità `Azienda` e la sua entità `Indirizzo`.
+
+Codice Java
+java
+@Entity
+public class Azienda {
+    @Id
+    private Long id;
+    
+    private String nome;
+
+    @Embedded
+    private Indirizzo indirizzo;
+
+    // Getter, setter, etc.
+}
+
+@Embeddable
+public class Indirizzo {
+    private String via;
+    private String città;
+    private String CAP;
+
+    // Getter, setter, etc.
+}
+
+
+Schema SQL
+sql
+CREATE TABLE azienda (
+    id BIGINT PRIMARY KEY,
+    nome VARCHAR(255),
+    via VARCHAR(255),
+    città VARCHAR(255),
+    CAP VARCHAR(5)
+);
+
+
+Utilizzo
+Questa forma di relazione è utile quando i dati del componente sono logicamente parte dell'entità contenitore e non hanno senso di esistere indipendentemente.
+
+2. Relazioni One-to-One Classiche
+
+Descrizione
+In una relazione One-to-One classica, due tabelle separate rappresentano due entità differenti che possono evolvere indipendentemente.
+
+Esempio Pratico
+Consideriamo un'entità `Utente` e la sua entità relativa `ProfiloAutenticazione`.
+
+Codice Java
+java
+@Entity
+public class Utente {
+    @Id
+    private Long id;
+
+    private String nome;
+    private String cognome;
+
+    @OneToOne(mappedBy = "utente")
+    private ProfiloAutenticazione profiloAutenticazione;
+
+    // Getter, setter, etc.
+}
+
+@Entity
+public class ProfiloAutenticazione {
+    @Id
+    private Long id;
+
+    private String username;
+    private String password;
+
+    @OneToOne
+    @JoinColumn(name = "utente_id")
+    private Utente utente;
+
+    // Getter, setter, etc.
+}
+
+
+Schema SQL
+sql
+CREATE TABLE utente (
+    id BIGINT PRIMARY KEY,
+    nome VARCHAR(255),
+    cognome VARCHAR(255)
+);
+
+CREATE TABLE profilo_autenticazione (
+    id BIGINT PRIMARY KEY,
+    username VARCHAR(255),
+    password VARCHAR(255),
+    utente_id BIGINT UNIQUE REFERENCES utente(id)
+);
+
+
+Utilizzo
+Questa forma di relazione è consigliata quando le due entità hanno esigenze di gestione o evoluzione differenti, ma sono strettamente correlate (ad esempio, gestione separata di autenticazione e dati personali).
+
+Considerazioni
+
+- Gestione della Dipendenza: Nella relazione One-to-One, è importante gestire correttamente il ciclo di vita delle entità correlate per evitare inconsistenze.
+- Lazy vs Eager Loading: JPA consente di configurare il caricamento pigro o immediato delle relazioni. Questa scelta può avere un impatto significativo sulle prestazioni.
+- Unicità e Integrità Referenziale: È cruciale garantire l'unicità e l'integrità referenziale attraverso chiavi esterne e vincoli di unicità.
