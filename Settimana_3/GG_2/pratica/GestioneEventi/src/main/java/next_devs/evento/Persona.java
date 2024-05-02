@@ -17,7 +17,7 @@ public class Persona {
     @Column(length = 25)
     private String cognome;
 
-    @Column(length = 25)
+    @Column(length = 100)
     private String email;
 
     @Column(name = "data_nascita")
