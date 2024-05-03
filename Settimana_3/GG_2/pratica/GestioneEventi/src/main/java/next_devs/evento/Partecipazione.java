@@ -4,6 +4,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "partecipazioni")
+// il = :evento sta a significare che è un evento che valorizzero dopo
+@NamedQuery(name = "getPersonaByEvento",query = "SELECT part.persona FROM Partecipazione part WHERE part.evento= :evento")
 public class Partecipazione {
     @Id
     @GeneratedValue

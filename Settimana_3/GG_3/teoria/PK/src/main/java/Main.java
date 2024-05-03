@@ -1,4 +1,7 @@
+import dao.ClasseStudentiDao;
+import dao.IndirizzoDao;
 import dao.StudenteDao;
+import entity.ClasseStudenti;
 import entity.Indirizzo;
 import entity.Studente;
 import entity.TipoStudenti;
@@ -15,38 +18,75 @@ public class Main {
         EntityManager em = emf.createEntityManager();
 
         StudenteDao dao = new StudenteDao(em);
-        Studente s1 = new Studente();
-        s1.setNome("Lino");
-        s1.setCognome("Marini");
-        s1.setTipoStudenti(TipoStudenti.LAVORATORE);
-        s1.setDataNascita(LocalDate.of(2000,8,6));
+        // se non creo il DAO anche dell'indirizzo, non viene considerato essendo una nuova classe/entità
+        IndirizzoDao indirizzoDao = new IndirizzoDao(em);
+        ClasseStudentiDao classeStudentiDao = new ClasseStudentiDao(em);
+//
+//
+//        Studente s1 = new Studente();
+//        s1.setNome("Lino");
+//        s1.setCognome("Marini");
+//        s1.setTipoStudenti(TipoStudenti.LAVORATORE);
+//        s1.setDataNascita(LocalDate.of(2000,8,6));
+//
+//        // creo un oggetto indirizzo
+//        Indirizzo indirizzo = new Indirizzo();
+//        indirizzo.setVia("Via Roma 2");
+//        indirizzo.setComune("Napoli");
+//        indirizzo.setProvincia("NA");
+//        // prima di settare l'indirizzo, salvo l'indirizzo dao
+//        indirizzoDao.save(indirizzo);
+//        // setto l'indirizzo allo studente a cui si riferisce
+//        s1.setIndirizzo(indirizzo);
+//        // ora possiamo salvare lo studente
+//        dao.save(s1);
+//
+//        em.refresh(indirizzo);  // refresho per farmi stampre lo studente dall'indirizzo sotto
+//
+//
+//        System.out.println(indirizzo.getStudente());// così mi dà null. Questa cosa ci viene fatta gratis da JPA
+//
+//        ClasseStudenti classeStudenti = new ClasseStudenti();
+//        classeStudenti.setNome("1L");
+//        classeStudenti.setPiano(2);
+//        classeStudentiDao.save(classeStudenti);
+//
+//        Studente s2 = new Studente();
+//        s2.setTipoStudenti(TipoStudenti.FULL_TIME);
+//        s2.setNome("Giacomo");
+//        s2.setCognome("Lol");
+//        s2.setDataNascita(LocalDate.of(1997,3,19));
+//        s2.setClasseStudenti(classeStudenti);
+//        dao.save(s2);
 
-        // creo un oggetto indirizzo
-        Indirizzo indirizzo = new Indirizzo();
-        indirizzo.setVia("Via Roma 2");
-        indirizzo.setComune("Napoli");
-        indirizzo.setProvincia("NA");
-        // setto l'indirizzo allo studente a cui si riferisce
-        s1.setIndirizzo(indirizzo);
-        dao.save(s1);
+            // studente senza classe a cui li assegno una classe gia presente
+//            Studente s3 = dao.getById(13);
+//
+//            ClasseStudenti classeStudenti2 = classeStudentiDao.getById(14);
+//
+//            s3.setClasseStudenti(classeStudenti2);
+//
+//            dao.save(s3);
+
+
+            // assegno una nuova classe ad uno studente che ha gia una classe ma li assegno una classe non ancora creata
+//            ClasseStudenti classeStudenti = new ClasseStudenti();
+//            classeStudenti.setNome("2M");
+//            classeStudenti.setPiano(2);
+//            classeStudentiDao.save(classeStudenti);
+//
+//            Studente studente = dao.getById(13);
+//            studente.setClasseStudenti(classeStudenti);
+//            dao.save(studente);
+
+             // --voglio recuperare tutti gli studenti di una classe creati da database
+             ClasseStudenti classeStudenti = classeStudentiDao.getById(14);
+             classeStudenti.getStudenti().forEach(System.out::println);
 
 
 
-//
-//        s1.setNome("Nino");
-//        s1.setCognome("Salvini");
-//        s1.setIndirizzo("Via dei Tali, 11");
-//        s1.setDataNascita(LocalDate.of(2000,12,11));
-//        //dao.save(s1);
-//
-//
-//        Studente s2 = dao.getById(1);
-//        System.out.println(s2);
-//
-//        s2.setIndirizzo("Piazza Roma, 54");
-//        //dao.save(s2);
-//
-//        dao.delete(s2);
+
+
 
     }
 }

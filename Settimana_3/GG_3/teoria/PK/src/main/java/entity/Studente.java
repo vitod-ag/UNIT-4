@@ -27,10 +27,14 @@ public class Studente {
     @Column(name = "tipo_studente")
     private TipoStudenti tipoStudenti;
 
-
     @OneToOne
     @JoinColumn(name = "indirizzo_id")
     private Indirizzo indirizzo;
+
+    //lato proprietario. infatti ha la Join Column
+    @ManyToOne
+    @JoinColumn(name = "classe_studenti_id")
+    private ClasseStudenti classeStudenti;
 
 
     public Studente(int matricola, String nome, String cognome, LocalDate dataNascita) {
@@ -88,6 +92,14 @@ public class Studente {
 
     public void setDataNascita(LocalDate dataNascita) {
         this.dataNascita = dataNascita;
+    }
+
+    public ClasseStudenti getClasseStudenti() {
+        return classeStudenti;
+    }
+
+    public void setClasseStudenti(ClasseStudenti classeStudenti) {
+        this.classeStudenti = classeStudenti;
     }
 
 

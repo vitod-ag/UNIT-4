@@ -16,7 +16,27 @@ public class Indirizzo {
 
     private String via;
     private String comune;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Studente getStudente() {
+        return studente;
+    }
+
+    public void setStudente(Studente studente) {
+        this.studente = studente;
+    }
+
     private String provincia;
+
+    @OneToOne(mappedBy = "indirizzo",fetch = FetchType.EAGER)
+    private Studente studente;
 
     public Indirizzo(String via, String comune, String provincia) {
         this.via = via;

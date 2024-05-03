@@ -6,6 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "persone")
+@NamedQuery(name = "getPersonaByName", query = "SELECT p FROM Persona p WHERE p.nome =: nome")
 public class Persona {
     @Id
     @GeneratedValue
@@ -29,6 +30,15 @@ public class Persona {
     @OneToMany(mappedBy = "persona")
     @Column(name = "lista_partecipazioni")
     private List<Partecipazione> listaPartecipazioni;
+
+    @OneToMany(mappedBy = "vincitore")
+    private List<GaraDiAtletica> garaVinte;
+
+    @ManyToMany
+    @JoinTable(name = "atleta_gara",
+    joinColumns = @JoinColumn(name = "atleta_id"),
+    inverseJoinColumns = @JoinColumn(name = "gara_id"))
+    private List<GaraDiAtletica> gareDiAtletica;
 
     public Persona() {}
 
@@ -102,7 +112,6 @@ public class Persona {
                 ", email='" + email + '\'' +
                 ", dataNascita=" + dataNascita +
                 ", sesso=" + sesso +
-                ", listaPartecipazioni=" + listaPartecipazioni +
                 '}';
     }
 }
