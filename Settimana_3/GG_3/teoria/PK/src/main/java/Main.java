@@ -1,15 +1,14 @@
 import dao.ClasseStudentiDao;
+import dao.CorsoDao;
 import dao.IndirizzoDao;
 import dao.StudenteDao;
-import entity.ClasseStudenti;
-import entity.Indirizzo;
-import entity.Studente;
-import entity.TipoStudenti;
+import entity.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -21,6 +20,7 @@ public class Main {
         // se non creo il DAO anche dell'indirizzo, non viene considerato essendo una nuova classe/entità
         IndirizzoDao indirizzoDao = new IndirizzoDao(em);
         ClasseStudentiDao classeStudentiDao = new ClasseStudentiDao(em);
+        CorsoDao corsoDao = new CorsoDao(em);
 //
 //
 //        Studente s1 = new Studente();
@@ -59,7 +59,7 @@ public class Main {
 //        s2.setClasseStudenti(classeStudenti);
 //        dao.save(s2);
 
-            // studente senza classe a cui li assegno una classe gia presente
+        // studente senza classe a cui li assegno una classe gia presente
 //            Studente s3 = dao.getById(13);
 //
 //            ClasseStudenti classeStudenti2 = classeStudentiDao.getById(14);
@@ -69,7 +69,7 @@ public class Main {
 //            dao.save(s3);
 
 
-            // assegno una nuova classe ad uno studente che ha gia una classe ma li assegno una classe non ancora creata
+        // assegno una nuova classe ad uno studente che ha gia una classe ma li assegno una classe non ancora creata
 //            ClasseStudenti classeStudenti = new ClasseStudenti();
 //            classeStudenti.setNome("2M");
 //            classeStudenti.setPiano(2);
@@ -79,13 +79,35 @@ public class Main {
 //            studente.setClasseStudenti(classeStudenti);
 //            dao.save(studente);
 
-             // --voglio recuperare tutti gli studenti di una classe creati da database
-             ClasseStudenti classeStudenti = classeStudentiDao.getById(14);
-             classeStudenti.getStudenti().forEach(System.out::println);
+        // --voglio recuperare tutti gli studenti di una classe creati da database
+//             ClasseStudenti classeStudenti = classeStudentiDao.getById(14);
+//             classeStudenti.getStudenti().forEach(System.out::println);
 
 
+        //creo i corsi e li assegno agli studenti che già ho
+        Corso corso1 = new Corso();
+        corso1.setNome("matematica");
+        corsoDao.save(corso1);
 
+        Corso corso2 = new Corso();
+        corso2.setNome("storia");
+        corsoDao.save(corso2);
 
+        // recupero gli studenti che già ho
+        Studente s1 =  dao.getById(1);
+        Studente s2 =  dao.getById(2);
+        Studente s3 =  dao.getById(13);
+        Studente s4 =  dao.getById(15);
+
+        s1.setCorsi(List.of(corso1,corso2));
+        s2.setCorsi(List.of(corso1,corso2));
+        s3.setCorsi(List.of(corso1,corso2));
+        s4.setCorsi(List.of(corso1,corso2));
+
+        dao.save(s1);
+        dao.save(s2);
+        dao.save(s3);
+        dao.save(s4);
 
 
     }

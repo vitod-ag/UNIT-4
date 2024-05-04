@@ -2,6 +2,7 @@ package entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "studenti")       // per indicare il nome della tabella, ma anche solo con Entity si crea la tabella
@@ -35,6 +36,12 @@ public class Studente {
     @ManyToOne
     @JoinColumn(name = "classe_studenti_id")
     private ClasseStudenti classeStudenti;
+
+    @ManyToMany
+    @JoinTable(name = "studenti_corsi",
+    joinColumns = @JoinColumn(name = "studenti_id"),
+    inverseJoinColumns = @JoinColumn(name = "corsi_id"))
+    private List<Corso> corsi;
 
 
     public Studente(int matricola, String nome, String cognome, LocalDate dataNascita) {
@@ -102,6 +109,13 @@ public class Studente {
         this.classeStudenti = classeStudenti;
     }
 
+    public List<Corso> getCorsi() {
+        return corsi;
+    }
+
+    public void setCorsi(List<Corso> corsi) {
+        this.corsi = corsi;
+    }
 
     @Override
     public String toString() {
