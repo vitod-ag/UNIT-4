@@ -9,17 +9,15 @@ import java.util.List;
 @Table(name = "utenti")
 public class Utente {
     @Id
+    @Column(name = "numero_di_tessera")
     @GeneratedValue
-    private Integer id;
+    private Integer numeroDiTessera;
     @Column(length = 50)
     private String nome;
     @Column(length = 50)
     private String cognome;
     @Column(name = "data_di_nascita")
     private LocalDate dataNascita;
-    @Column(name = "numero_di_tessera")
-    private Integer numeroDiTessera;
-
     @OneToMany(mappedBy = "utente")
     private List<Prestito> prestiti;
 
@@ -33,10 +31,6 @@ public class Utente {
 
     public Utente() {
         this.prestiti = new ArrayList<>();
-    }
-
-    public Integer getId() {
-        return id;
     }
 
     public String getNome() {
@@ -69,5 +63,16 @@ public class Utente {
 
     public void setNumeroDiTessera(Integer numeroDiTessera) {
         this.numeroDiTessera = numeroDiTessera;
+    }
+
+    @Override
+    public String toString() {
+        return "Utente{" +
+                "numeroDiTessera=" + numeroDiTessera +
+                ", nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", dataNascita=" + dataNascita +
+                ", prestiti=" + prestiti +
+                '}';
     }
 }

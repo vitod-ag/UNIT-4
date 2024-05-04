@@ -1,7 +1,6 @@
 package next_devs.Entity;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -11,11 +10,12 @@ public class Catalogo {
     @Id
     private String codiceISBN;
     private String titolo;
-    private LocalDate annoPubblicazione;
+    @Column(name = "anno_pubblicazione")
+    private Integer annoPubblicazione;
     private Integer numeroPagine;
 
 
-    public Catalogo(String codiceISBN,String titolo, LocalDate annoPubblicazione, Integer numeroPagine) {
+    public Catalogo(String codiceISBN,String titolo, Integer annoPubblicazione, Integer numeroPagine) {
         this.codiceISBN = codiceISBN;
         this.titolo = titolo;
         this.annoPubblicazione = annoPubblicazione;
@@ -28,7 +28,9 @@ public class Catalogo {
         return codiceISBN;
     }
 
-    //non faccio il set del codice ISBN visto che non va settato
+    public void setCodiceISBN(String codiceISBN) {
+        this.codiceISBN = codiceISBN;
+    }
 
     public String getTitolo() {
         return titolo;
@@ -38,11 +40,11 @@ public class Catalogo {
         this.titolo = titolo;
     }
 
-    public LocalDate getAnnoPubblicazione() {
+    public Integer getAnnoPubblicazione() {
         return annoPubblicazione;
     }
 
-    public void setAnnoPubblicazione(LocalDate annoPubblicazione) {
+    public void setAnnoPubblicazione(Integer annoPubblicazione) {
         this.annoPubblicazione = annoPubblicazione;
     }
 
@@ -76,4 +78,6 @@ public class Catalogo {
     public int hashCode() {
         return Objects.hash(codiceISBN, titolo, annoPubblicazione, numeroPagine);
     }
+
+
 }

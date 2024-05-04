@@ -11,7 +11,7 @@ public class Libro extends Catalogo{
     private String genere;
 
 
-    public Libro(String codiceISBN, String titolo, LocalDate annoPubblicazione, Integer numeroPagine, String autore, String genere) {
+    public Libro(String codiceISBN, String titolo, Integer annoPubblicazione, Integer numeroPagine, String autore, String genere) {
         super(codiceISBN, titolo, annoPubblicazione, numeroPagine);
         this.autore = autore;
         this.genere = genere;
@@ -20,6 +20,8 @@ public class Libro extends Catalogo{
     public Libro(){
         super();
     }
+
+
 
     public String getAutore() {
         return autore;

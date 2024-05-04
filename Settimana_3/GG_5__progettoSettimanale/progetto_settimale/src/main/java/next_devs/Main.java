@@ -1,134 +1,229 @@
 package next_devs;
 
-import next_devs.Entity.Archivio;
-import next_devs.Entity.Libro;
-import next_devs.Entity.Rivista;
+import next_devs.DAO.*;
+import next_devs.Entity.*;
 import next_devs.Enums.Periodicita;
-import next_devs.Exceptions.CatalogoException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.time.LocalDate;
-import java.util.stream.Collectors;
+import java.util.List;
 
 public class Main {
-
-    static Logger logger = LoggerFactory.getLogger(Main.class);
-
     public static void main(String[] args) {
-        Archivio catalogo = new Archivio();
-        Rivista rivista1 = new Rivista("AT1001", "Forbes", LocalDate.of(2019, 8, 6),
-                57, Periodicita.ANNUALE);
-        Rivista rivista2 = new Rivista("AT1002", "Guerin Sportivo", LocalDate.of(2021, 1, 5),
-                64, Periodicita.MENSILE);
-        Rivista rivista3 = new Rivista("AT1003", "Rolling Stones", LocalDate.of(2015, 11, 9),
-                82, Periodicita.SETTIMANALE);
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("Biblioteca");
+        EntityManager em = emf.createEntityManager();
 
-        Libro libro1 = new Libro("IT1004", "Resto qui", LocalDate.of(2022, 10, 6),
-                415, "Carofiglio", "Fantasy");
-        Libro libro2 = new Libro("IT1005", "Otello", LocalDate.of(2023, 4, 8),
-                454, "William Shakespeare", "Horror");
-        Libro libro3 = new Libro("IT1006", "Post Office", LocalDate.of(2018, 1, 4),
-                530, "Charles Bukowski", "Thriller");
+        LibroDao libroDao = new LibroDao(em);
+        CatalogoDao catalogoDao = new CatalogoDao(em);
+        RivistaDao rivistaDao = new RivistaDao(em);
+        UtenteDao utenteDao = new UtenteDao(em);
+        PrestitoDao prestitoDao = new PrestitoDao(em);
+
+        //****1.Aggiunta di un elemento del catalogo******;
+        // creo i libri
+        Libro l1 = new Libro();
+        l1.setCodiceISBN("AO001A");
+        l1.setTitolo("Modernità liquida");
+        l1.setAnnoPubblicazione(2014);
+        l1.setNumeroPagine(450);
+        l1.setAutore("Zygmunt Bauman");
+        l1.setGenere("Attualità, inchiesta");
+        try {
+            libroDao.save(l1);
+            System.out.println("Libro salvato con successo");
+        } catch (Exception e) {
+            System.err.println("Libro duplicato");
+        }
+
+
+        Libro l2 = new Libro();
+        l2.setCodiceISBN("AO001B");
+        l2.setTitolo("Il mercante di Venezia");
+        l2.setAnnoPubblicazione(1998);
+        l2.setNumeroPagine(180);
+        l2.setAutore("William Shakespeare");
+        l2.setGenere("Romanzo");
+        try {
+            libroDao.save(l2);
+            System.out.println("Libro salvato con successo");
+        } catch (Exception e) {
+            System.err.println("Libro duplicato");
+        }
+
+        Libro l3 = new Libro();
+        l3.setCodiceISBN("AO001C");
+        l3.setTitolo("Resto qui");
+        l3.setAnnoPubblicazione(2018);
+        l3.setNumeroPagine(250);
+        l3.setAutore("Marco Balzano");
+        l3.setGenere("Saggio");
+        try {
+            libroDao.save(l3);
+            System.out.println("Libro salvato con successo");
+        } catch (Exception e) {
+            System.err.println("Libro duplicato");
+        }
+
+        // creo le riviste
+        Rivista r1 = new Rivista();
+        r1.setCodiceISBN("B0001A");
+        r1.setTitolo("Forbes");
+        r1.setNumeroPagine(50);
+        r1.setPeriodicita(Periodicita.MENSILE);
+        r1.setAnnoPubblicazione(2009);
+        try {
+            rivistaDao.save(r1);
+            System.out.println("Rivista salvato con successo");
+        } catch (Exception e) {
+            System.err.println("Rivista duplicato");
+        }
+
+        Rivista r2 = new Rivista();
+        r2.setCodiceISBN("B0001B");
+        r2.setTitolo("Guerin Sportivo");
+        r2.setNumeroPagine(30);
+        r2.setPeriodicita(Periodicita.SETTIMANALE);
+        r2.setAnnoPubblicazione(2020);
+        try {
+            rivistaDao.save(r2);
+            System.out.println("Rivista salvato con successo");
+        } catch (Exception e) {
+            System.err.println("Rivista duplicato");
+        }
+
+        Rivista r3 = new Rivista();
+        r3.setCodiceISBN("B0001C");
+        r3.setTitolo("Chi");
+        r3.setNumeroPagine(25);
+        r3.setPeriodicita(Periodicita.ANNUALE);
+        r3.setAnnoPubblicazione(1999);
+        try {
+            rivistaDao.save(r3);
+            System.out.println("Rivista salvato con successo");
+        } catch (Exception e) {
+            System.err.println("Rivista duplicato");
+        }
+
+
+        // 2. Rimozione di un elemento del catalogo dato un codice ISBN
+        try {
+            Catalogo catalogo = catalogoDao.getById("693");
+            if (catalogo != null) {
+                catalogoDao.delete(catalogo);
+                System.out.println("Prodotto eliminato");
+            } else {
+                throw new RuntimeException("Prodotto inesistente");
+            }
+        } catch (Exception e) {
+            System.err.println("Errore: " + e.getMessage());
+        }
 
         try {
-            catalogo.addProduct(rivista1);
-            catalogo.addProduct(rivista2);
-            catalogo.addProduct(rivista3);
-            catalogo.addProduct(libro1);
-            catalogo.addProduct(libro2);
-            catalogo.addProduct(libro3);
-        } catch (CatalogoException e) {
-            logger.error(e.getMessage());
+            Catalogo catalogo = catalogoDao.getById("AO001C");
+            if (catalogo != null) {
+                catalogoDao.delete(catalogo);
+                System.out.println("Prodotto eliminato");
+            } else {
+                throw new RuntimeException("Prodotto inesistente");
+            }
+        } catch (
+                Exception e) {
+            System.err.println("Errore: " + e.getMessage());
         }
 
-        System.out.println(catalogo);
+        System.out.println("3. Ricerca per ISBN");
+        Catalogo findCatalogo = catalogoDao.getById("AO001A");
+        System.out.println(findCatalogo);
 
-        // Utilizzo dei vari metodi
+        System.out.println("4. Ricerca per anno pubblicazione");
+        List<Catalogo> cataloghiByYear = catalogoDao.findByYear(2005);
+        cataloghiByYear.forEach(System.out::println);
 
-        Libro libro4 = new Libro("IT1007", "1984",
-                LocalDate.of(2018, 4, 14), 650, "George Orwell", "Fantasy");
+        System.out.println("5. Ricerca per autore");
+        List<Catalogo> catalogoByAutore = catalogoDao.findByAuthor("Bauman");
+        catalogoByAutore.forEach(System.out::println);
+
+        System.out.println("6. Ricerca per titolo o parte di esso");
+        List<Catalogo> catalogoByTitle = catalogoDao.findByTitle("liquida");
+        catalogoByTitle.forEach(System.out::println);
+
+        // creo gli utenti
+        Utente u1 = new Utente();
+        u1.setNome("Mario");
+        u1.setCognome("Ventola");
+        u1.setDataNascita(LocalDate.of(1999, 2, 7));
         try {
-            catalogo.addProduct(libro4);
-        } catch (CatalogoException e) {
-            logger.error(e.getMessage());
+            utenteDao.save(u1);
+            System.out.println("Utente salvato con successo");
+        } catch (Exception e) {
+            System.err.println("Utente duplicato");
         }
 
+        Utente u2 = new Utente();
+        u1.setNome("Michele");
+        u1.setCognome("Nanni");
+        u1.setDataNascita(LocalDate.of(2003, 4, 12));
         try {
-            System.out.println(catalogo.searchYearPubblication("2023"));
-        } catch (CatalogoException e) {
-            logger.error(e.getMessage());
+            utenteDao.save(u2);
+            System.out.println("Utente salvato con successo");
+        } catch (Exception e) {
+            System.err.println("Utente duplicato");
         }
 
+        Utente u3 = new Utente();
+        u3.setNome("Nicola");
+        u3.setCognome("Brogi");
+        u3.setDataNascita(LocalDate.of(1995, 8, 1));
         try {
-            catalogo.searchAuthor("William Shakespeare");
-        } catch (CatalogoException e) {
-            logger.error(e.getMessage());
+            utenteDao.save(u3);
+            System.out.println("Utente salvato con successo");
+        } catch (Exception e) {
+            System.err.println("Utente duplicato");
         }
 
+        // mi creo i prestiti
+        Prestito pr1 = new Prestito();
+        pr1.setUtente(utenteDao.getById(1));
+        pr1.setDataInizioPrevisto(LocalDate.now());
+        pr1.setCatalogo(catalogoDao.getById("AO001A"));
         try {
-            System.out.println(catalogo.searchPerISBN("AT1003"));
-        } catch (CatalogoException e) {
-            logger.error(e.getMessage());
+            prestitoDao.save(pr1);
+            System.out.println("Prestito salvato con successo");
+        } catch (Exception e) {
+            System.err.println("Prestito duplicato");
         }
 
+        Prestito pr2 = new Prestito();
+        pr2.setUtente(utenteDao.getById(2));
+        pr2.setDataInizioPrevisto(LocalDate.now());
+        pr2.setCatalogo(catalogoDao.getById("AO001B"));
         try {
-            catalogo.removePerISBN("IT1007");
-        } catch (CatalogoException e) {
-            logger.error(e.getMessage());
+            prestitoDao.save(pr2);
+            System.out.println("Prestito salvato con successo");
+        } catch (Exception e) {
+            System.err.println("Prestito duplicato");
         }
 
+        Prestito pr3 = new Prestito();
+        pr3.setUtente(utenteDao.getById(2));
+        pr3.setDataInizioPrevisto(LocalDate.now());
+        pr3.setCatalogo(catalogoDao.getById("B0001C"));
         try {
-            System.out.println(catalogo.searchAuthor("J.R.R. Tolkien"));
-        } catch (CatalogoException e) {
-            logger.error(e.getMessage());
+            prestitoDao.save(pr3);
+            System.out.println("Prestito salvato con successo");
+        } catch (Exception e) {
+            System.err.println("Prestito duplicato");
         }
 
-        // Scrittura del catalogo su file
-        scriviCatalogoSuFile(catalogo);
-    }
+        System.out.println("7. Ricerca degli elementi attualmente in prestito dato un numero di tessera utente");
+        List<Catalogo> prodottiPrestito = prestitoDao.getProductFromId(2);
+        prodottiPrestito.forEach(System.out::println);
 
-    private static void scriviCatalogoSuFile(Archivio catalogo) {
-        File file = new File("./salvataggio/nuovoFile.txt");
+        System.out.println("8. Ricerca di tutti i prestiti scaduti e non ancora restituiti");
+        List<Prestito> prestitiNonRestituiti = prestitoDao.getPrestitoScadutoNonConsegnato();
+        prestitiNonRestituiti.forEach(System.out::println);
 
-        String stringaCatalogo = catalogo.getArchivioCatalogo().values().stream()
-                .map(elemento -> {
-                    if (elemento instanceof Libro) {
-                        return mapLibro((Libro) elemento);
-                    } else {
-                        return mapRivista((Rivista) elemento);
-                    }
-                })
-                .collect(Collectors.joining("\n")); // Usiamo il carattere di nuova linea come delimitatore
-
-        // Salvataggio su file
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            writer.write(stringaCatalogo);
-        } catch (IOException e) {
-            logger.error("Errore durante la scrittura su file: " + e.getMessage());
-        }
-    }
-
-    // Funzione per mappare un libro
-    private static String mapLibro(Libro libro) {
-        return "Libro: " + libro.getTitolo() +
-                ", ISBN: " + libro.getCodiceISBN() +
-                ", Anno di pubblicazione: " + libro.getAnnoPubblicazione() +
-                ", Numero pagine: " + libro.getNumeroPagine() +
-                ", Autore: " + libro.getAutore() +
-                ", Genere: " + libro.getGenere();
-    }
-
-    // Funzione per mappare una rivista
-    private static String mapRivista(Rivista rivista) {
-        return  "Rivista: " + rivista.getTitolo() +
-                ", ISBN: " + rivista.getCodiceISBN() +
-                ", Anno di pubblicazione: " + rivista.getAnnoPubblicazione() +
-                ", Numero pagine: " + rivista.getNumeroPagine() +
-                ", Periodicità: " + rivista.getPeriodicita();
     }
 }

@@ -10,12 +10,11 @@ public class Prestito {
     @Id
     @GeneratedValue
     private Integer id;
-    @OneToOne
-    @JoinColumn(name = "catalogo_codice_ISBN")
-    private Utente utente;
     @ManyToOne
-    @JoinColumn(name = "")
-    @Column(length = 100)
+    @JoinColumn(name = "utente_numero_di_tessera")
+    private Utente utente;
+    @OneToOne
+    @JoinColumn(name = "catalogo_codiceISBN")
     private Catalogo catalogo;
     @Column(name = "data_di_inizio_previsto")
     private LocalDate dataInizioPrevisto;
@@ -72,5 +71,17 @@ public class Prestito {
 
     public void setDataRestituzioneEffettiva(LocalDate dataRestituzioneEffettiva) {
         this.dataRestituzioneEffettiva = dataRestituzioneEffettiva;
+    }
+
+    @Override
+    public String toString() {
+        return "Prestito{" +
+                "id=" + id +
+                ", utente=" + utente +
+                ", catalogo=" + catalogo +
+                ", dataInizioPrevisto=" + dataInizioPrevisto +
+                ", dataRestituzionePrevista=" + dataRestituzionePrevista +
+                ", dataRestituzioneEffettiva=" + dataRestituzioneEffettiva +
+                '}';
     }
 }

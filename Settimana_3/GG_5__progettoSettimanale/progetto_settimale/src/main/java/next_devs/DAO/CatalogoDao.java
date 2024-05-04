@@ -41,4 +41,22 @@ public class CatalogoDao {
     public List<Catalogo> findAll() {
         return em.createQuery("SELECT ctg FROM Catalogo ctg", Catalogo.class).getResultList();
     }
+
+    public List<Catalogo>findByYear(Integer anno){
+        return em.createQuery("SELECT ctg FROM Catalogo ctg WHERE anno_pubblicazione= :anno ", Catalogo.class)
+                .setParameter("anno",anno)
+                .getResultList();
+    }
+
+    public List<Catalogo>findByTitle(String titolo){
+        return em.createQuery("SELECT ctg FROM Catalogo ctg WHERE titolo LIKE :titolo", Catalogo.class)
+                .setParameter("titolo", "%" + titolo + "%")
+                .getResultList();
+    }
+
+    public List<Catalogo> findByAuthor(String author){
+        return em.createQuery("SELECT ctg FROM Catalogo ctg WHERE autore LIKE :autore ", Catalogo.class)
+                .setParameter("autore","%" + author + "%")
+                .getResultList();
+    }
 }
